@@ -78,3 +78,7 @@ if (isset($_POST['gosearch'])) {
         echo "Nothing found...";
     }
 }
+
+?>
+
+<script src="./assets/js/scripts.js"></script>
