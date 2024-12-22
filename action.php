@@ -71,7 +71,7 @@ function out_arr()
     global $countries;
     // делаем переменную $countries глобальной
     $arr_out = [];
-    $arr_out[] = "<table>";
+    $arr_out[] = "<table  class=\"table table-hover\">";
     $arr_out[] = "<tr><td>№</td><td>Страна</td><td>Столица</td><td>Площадь</td><td>Население за 2000 год</td><td>Население за 2010 год</td><td>Среднее население</td></tr>";
     foreach ($countries as $country) {
         static $i = 1;
@@ -102,7 +102,7 @@ function out_arr_search(array $arr_index = null)
 {
     global $countries; // делаем переменную $countries глобальной
     $arr_out = array();
-    $arr_out[] = "<table  class=\"table table-hover text-white-50\">";
+    $arr_out[] = "<table  class=\"table table-hover \">";
     $arr_out[] = "<tr><td>№</td><td>Country</td><td>
     Capital</td><td>Area</td><td>Population for 2000</td><td>Population for 2010</td><td>Average population</td></tr>";
     foreach ($countries as $index => $country) {

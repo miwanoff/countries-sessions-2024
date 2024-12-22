@@ -61,12 +61,14 @@ if (!$autorized) {
                     <?php
 $str_form_s = '
 <form action="index.php" method="post" name="sort_form">
-    <select name="sort" id="sort" size="1">
-        <option value="name">назва</option>
-        <option value="area">площа</option>
-        <option value="population">среднє населення</option>
-    </select>
-    <input type="submit" name="submit" value="OK">
+    <div class="mb-3 mt-3">
+       <select name="sort" id="sort" size="1"  class="form-select">
+         <option value="name">назва</option>
+         <option value="area">площа</option>
+         <option value="population">среднє населення</option>
+       </select>
+    </div>
+    <input type="submit" name="submit" value="OK"  class="btn btn-primary">
 </form>';
 echo $str_form_s;
 
@@ -98,9 +100,9 @@ if (isset($_POST["sort"])) {
             <div class="row gx-5 justify-content-center">
                 <div class="col-lg-8 col-xl-6">
                     <?php
-$str_form_search = "<form name='searchForm' action='index.php' method='post' onSubmit='return overify_login(this);'>
+$str_form_search = "<form name='searchForm' action='index.php' method='post' onSubmit='return overify_login(this);' >
                             <input type='text' name='search' class='form-control'>
-                            <input type='submit' name='gosearch' value='Confirm' class='btn btn-secondary my-2'>
+                            <input type='submit' name='gosearch' value='Confirm'  class='btn btn-primary my-2'>
                             <input type='reset' name='clear' value='Reset' class='btn btn-secondary my-2'>
 </form>";
 
