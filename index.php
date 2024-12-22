@@ -31,9 +31,15 @@ if (isset($_POST["go"])) {
                 <div class="col-lg-8 col-xl-6">
                     <?php
 $user_form = '<form action="' . $_SERVER['PHP_SELF'] . '" method="post" name="autoForm">
-<input type="text" name="login" placeholder="Input login">
-<input type="password" name="pass" placeholder="Input password">
-<input type="submit" value="Go" name="go">
+  <div class="mb-3 mt-3">
+    <label for="login" class="form-label">Name:</label>
+    <input type="text" name="login" id="login" placeholder="Input login" class="form-control" >
+  </div>
+  <div class="mb-3">
+    <label for="pass class="form-label">Password:</label>
+    <input type="password" name="pass" id="pass" placeholder="Input password"  class="form-control" >
+  </div>
+  <input type="submit" value="Go" name="go" class="btn btn-primary">
 </form>';
 
 if (!$autorized) {
