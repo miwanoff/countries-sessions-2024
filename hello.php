@@ -1,4 +1,7 @@
 <?php
+require_once "action.php";
+include "header.php";
+
 if (isset($_GET['login']) && $_GET['login'] == "admin") {
     include "db.php";
     $login = $_GET['login'];
@@ -6,3 +9,5 @@ if (isset($_GET['login']) && $_GET['login'] == "admin") {
 } else {
     header("Location: index.php");
 }
+
+include "footer.php";

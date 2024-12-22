@@ -1,6 +1,6 @@
 <?php
 require_once "action.php";
-
+include "header.php";
 $autorized = false;
 if (isset($_POST["go"])) {
     $login = $_POST["login"];
@@ -79,6 +79,4 @@ if (isset($_POST['gosearch'])) {
     }
 }
 
-?>
-
-<script src="./assets/js/scripts.js"></script>
+include "footer.php";
