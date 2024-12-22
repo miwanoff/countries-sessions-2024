@@ -1,29 +1,55 @@
 <?php
+session_start();
+
 require_once "db.php";
 
 function check_autorize($log, $pass)
 {
-    global $users;
-    return array_key_exists($log, $users) && $pass == $users[$log]['pass'];
+   // global $users;
+   $users = get_users();
+    // return array_key_exists($log, $users) && $pass == $users[$log]['pass'];
+    if (array_key_exists($log, $users) && $pass == $users[$log]['pass']) {
+        $_SESSION['authorized'] = 1;
+        $_SESSION['login'] = $log;
+        return true;
+    }
+    return false;
 }
 
-// if (check_autorize('rodger', 'qwerty455')) {
-//     echo "Yes";
-// } else {
-//     echo "No";
-// }
+function add_user($login, $password)
+{
+    $users = get_users();
+    if (check_log($login)) {
+        return false;
+    } else {
+        $users[$login] = ["pass" => $password, 'role' => 'user'];
+        update_users($users);
+        $_SESSION['authorized'] = 1;
+        $_SESSION['login'] = $login;
+        return true;
+    }
+}
 
-function check_admin($log, $pass)  {
-    global $users;
+function check_log($log)
+{
+    $users = get_users();
+    return array_key_exists($log, $users);
+}
+
+function check_admin($log, $pass)
+{
+    //global $users;
+    $users = get_users();
     //echo $users[$log]['role'];
     return check_autorize($log, $pass) && $users[$log]['role'] == 'admin';
 }
 
-// if (check_admin('alex', 'admin2233')) {
-//     echo "Yes";
-// } else {
-//     echo "No";
-// }
+function check_role($log, $pass)
+{
+    //global $users;
+    $users = get_users();
+    return check_autorize($log, $pass) ? $users[$log]['role'] : false;
+}
 
 function name($a, $b)
 { // функция, определяющая способ сортировки (по названию столицы)
@@ -66,7 +92,7 @@ function sorting($how_to_sort)
     uasort($countries, $how_to_sort);
 }
 
-function out_arr()
+function out_countries()
 {
     global $countries;
     // делаем переменную $countries глобальной
@@ -154,8 +180,13 @@ function test_input($data)
     return htmlspecialchars(stripslashes(trim($data)));
 }
 
+function update_users($users)
+{
+
+}
+
 function get_users()
 {
     global $users;
-    return $users;
+    return $users;    
 }

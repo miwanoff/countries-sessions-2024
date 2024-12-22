@@ -5,12 +5,13 @@ $autorized = false;
 if (isset($_POST["go"])) {
     $login = $_POST["login"];
     $password = $_POST["pass"];
+    echo check_role($login, $password) . "<br>";
     //echo "$login  $password";
     if (check_autorize($login, $password)) {
-        $autorized = true;
+        $autorized = $_SESSION['authorized'];
         echo "Hello, $login";
         if (check_admin($login, $password)) {
-            echo "<a href='hello.php?login=$login'>Просмотр отчета</a>";
+            echo "<a href='secret-info.php?login=$login'>Просмотр отчета</a>";
         }
     } else {
         echo "You are not registered";
@@ -30,21 +31,26 @@ if (isset($_POST["go"])) {
             <div class="row gx-5 justify-content-center">
                 <div class="col-lg-8 col-xl-6">
                     <?php
-$user_form = '<form action="' . $_SERVER['PHP_SELF'] . '" method="post" name="autoForm">
+$user_form = '<form action="' . $_SERVER['PHP_SELF'] . '" method="post" name="autoForm" onsubmit = "return verify(this)" >
   <div class="mb-3 mt-3">
     <label for="login" class="form-label">Name:</label>
-    <input type="text" name="login" id="login" placeholder="Input login" class="form-control" >
+    <input type="text" name="login" id="login" placeholder="Input login" class="form-control"  pattern="[A-Za-z]{3,10}" required>
   </div>
   <div class="mb-3">
     <label for="pass class="form-label">Password:</label>
-    <input type="password" name="pass" id="pass" placeholder="Input password"  class="form-control" >
+    <input type="password" name="pass" id="pass" placeholder="Input password"  class="form-control"  pattern="[A-Za-z]{3,10}" required>
   </div>
   <input type="submit" value="Go" name="go" class="btn btn-primary">
-</form>';
+</form>
+<div id="massage"></div>';
 
 if (!$autorized) {
     echo $user_form;
+    echo "<a href='registration.php'>Sign up</a>";
+} else {
+    echo '<br><a href="logout.php" class="logout">logout</a>';
 }
+echo "</div>"
 ?>
                 </div>
             </div>
@@ -75,16 +81,15 @@ echo $str_form_s;
 if (isset($_POST["sort"])) {
     $how_to_sort = $_POST["sort"];
     sorting($how_to_sort);
+}
+$out = out_countries();
 
-    $out = out_arr();
-
-    if (count($out) > 0) {
-        foreach ($out as $row) {
-            echo $row;
-        }
-    } else {
-        echo "Нет данных";
+if (count($out) > 0) {
+    foreach ($out as $row) {
+        echo $row;
     }
+} else {
+    echo "Empty";
 }
 ?>
                 </div>
@@ -102,8 +107,7 @@ if (isset($_POST["sort"])) {
                     <?php
 $str_form_search = "<form name='searchForm' action='index.php' method='post' onSubmit='return overify_login(this);' >
                             <input type='text' name='search' class='form-control'>
-                            <input type='submit' name='gosearch' value='Confirm'  class='btn btn-primary my-2'>
-                            <input type='reset' name='clear' value='Reset' class='btn btn-secondary my-2'>
+                            <input type='submit' name='gosearch' value='Confirm'  class='btn btn-primary my-2'>                       
 </form>";
 
 echo $str_form_search;
@@ -112,7 +116,7 @@ if (isset($_POST['gosearch'])) {
     $data = test_input($_POST['search']);
     $out = out_search($data);
 
-    // виклик функції out_arr() з action.php для отримання массиву
+    // виклик функції out_countries() з action.php для отримання массиву
     if (count($out) > 0) {
         foreach ($out as $row) { //вывод массива построчно
             echo $row;
